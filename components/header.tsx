@@ -52,14 +52,14 @@ export default function Header() {
         <div className="w-full  xl:min-w-7xl  px-6 lg:px-8">
           <div className="flex items-center  justify-between h-16">
             <Link href="/">
-            <Image
-              src="/Logo AquaWare FINAL.001 kopie.png"
-              alt="Aqua Ware Logo"
-              width={0}
-              height={0}
-              className="h-8 lg:h-12 w-auto"
-              priority
-            />
+              <Image
+                src="/Logo AquaWare FINAL.001 kopie.png"
+                alt="Aqua Ware Logo"
+                width={0}
+                height={0}
+                className="h-8 lg:h-12 w-auto"
+                priority
+              />
             </Link>
 
             <nav className="hidden md:flex items-center space-x-8">

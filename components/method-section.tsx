@@ -1,11 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, MouseEvent } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/language-context";
 import Link from "next/link";
-import { MouseEvent } from "react";
 
 type LangKey = "en" | "nl";
 
@@ -50,7 +49,7 @@ const i18n: Record<
     description:
       "Met onze trechteraanpak brengen we eerst álle bedrijven in uw werkgebied in beeld. Vervolgens filteren we naar de bedrijven die echt relevant zijn voor de waterkwaliteit – op basis van hun bedrijfsprofiel, lozingsrisico’s en andere kritische kenmerken. Dit leidt tot een datagedreven prioriteringsoverzicht, waarmee u direct ziet waar de grootste risico’s en kansen liggen.",
     additionalDescription:
-      "Het resultaat: complexe data vertaald naar heldere inzichten, meer grip op waterkwaliteit en een efficiëntere inzet van tijd en middelen.",
+      "Het resultaat: complexe data vertaald naar heldere inzichten, meer grip op waterkwaliteit en een efficiëntere inzet van tijd en middelen.",
     benefits: [],
     button: "Plan een demo",
     steps: ["Stap 1", "Stap 2", "Stap 3"],
@@ -82,7 +81,7 @@ function MobileFunnel({
     <div className="block md:hidden">
       <div className="space-y-4">
         {bands.map((b, idx) => {
-          const visible = activeStep >= idx + 1;
+          const visible = (activeStep >= idx + 1) as 1 | 2 | 3;
           return (
             <motion.div
               key={idx}
@@ -240,15 +239,15 @@ function DesktopTriangle({
     ];
   }, [H, Wtop, cx, yTop, gap, sliceH]);
 
-  // Compute tight viewBox around the triangle ONLY (no label space)
+  // Tight viewBox around the triangle ONLY, align to right
   const rightMost = Math.max(
     ...bandsGeom.map((g) => Math.max(...g.poly.map((p) => p[0])))
   );
   const triLeft = cx - Wtop / 2;
-  const vbPad = 8; // small breathing room
+  const vbPad = 8;
   const vbMinX = triLeft - vbPad;
   const vbMinY = yTop - 30;
-  const vbWidth = rightMost - triLeft + vbPad * 2; // <-- removed old +220
+  const vbWidth = rightMost - triLeft + vbPad * 2;
   const vbHeight = H + 60;
 
   const fills = ["#3b82f6", "#1f64d6", "#1749a6"];
@@ -262,13 +261,12 @@ function DesktopTriangle({
         initial={{ opacity: 0, scale: 0.985 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.35 }}
-        className="relative h-[360px] lg:h-[400px] xl:h-[420px] w-full ml-auto"
+        className="relative h-[360px] lg:h-[400px] xl:h-[420px] w-full ml-auto overflow-hidden"
       >
         <svg
           viewBox={`${vbMinX} ${vbMinY} ${vbWidth} ${vbHeight}`}
-          // Align SVG content to the RIGHT inside its viewport
           preserveAspectRatio="xMaxYMid meet"
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 block w-full h-full"
         >
           {/* Slices (clickable) */}
           {bandsGeom.map((g, i) => {
@@ -316,33 +314,7 @@ function DesktopTriangle({
             );
           })}
 
-          {/* 
-          Leader lines + subtitles on the right (both use LABEL_COLOR)
-          {bandsGeom.map((g, i) => {
-            const visible = activeStep >= g.idx;
-            const y = g.cy;
-            const xRightAtCy = Math.max(
-              ...g.poly.map((p) =>
-                Math.abs(p[1] - y) < 1e-6 ? p[0] : -Infinity
-              )
-            );
-            const x1 = Number.isFinite(xRightAtCy)
-              ? xRightAtCy
-              : Math.max(...g.poly.map((p) => p[0]));
-            const labelStart = rightMost + 18;
-            const lineLen = 1;
-            const x2 = labelStart + lineLen;
-
-            const sLines = wrap(bands[g.idx - 1].subtitle, subtitleWrap[i]);
-            return (
-              <g key={`label-${g.idx}`} opacity={visible ? 1 : 0.25}>
-                <line x1={x1} y1={y} x2={labelStart} y2={y} stroke={LABEL_COLOR} strokeWidth={2} />
-                <line x1={labelStart} y1={y} x2={x2} y2={y} stroke={LABEL_COLOR} strokeWidth={2} />
-                <SvgMultiline x={x2 + 8} y={y} lines={sLines} size={14} fill={LABEL_COLOR} weight={500} anchor="start" lineHeight={1.25} />
-              </g>
-            );
-          })}
-          */}
+          {/* (leader lines + subtitles remain commented out) */}
         </svg>
       </motion.div>
     </div>
@@ -359,19 +331,14 @@ export default function MethodSection() {
     e.preventDefault();
     const target = document.getElementById("contact-form");
     if (!target) return;
-
-    const OFFSET = 100; // tweak this to land “a bit above” your form
+    const OFFSET = 100;
     const y = target.getBoundingClientRect().top + window.pageYOffset - OFFSET;
-
-    // update the URL hash without jumping
     window.history.pushState(null, "", "#contact-form");
-
-    // smooth scroll
     window.scrollTo({ top: y, behavior: "smooth" });
   };
 
   return (
-    <section className="py-16  sm:py-20 md:py-24 bg-transparent">
+    <section className="py-16 sm:py-20 md:py-24 bg-transparent overflow-x-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-5 gap-14 sm:gap-12 lg:gap-16 items-start w-full">
           {/* LEFT */}
@@ -382,7 +349,7 @@ export default function MethodSection() {
             viewport={{ once: true }}
             className="lg:col-span-2 space-y-6 sm:space-y-7 flex flex-col items-center sm:items-start text-center sm:text-start"
           >
-            <h2 className="text-center sm:text-start text-4xl sm:text-[36px] lg:text-5xl  font-bold text-foreground leading-tight">
+            <h2 className="text-center sm:text-start text-4xl sm:text-[36px] lg:text-5xl font-bold text-foreground leading-tight">
               {t.title}
             </h2>
 
@@ -411,14 +378,17 @@ export default function MethodSection() {
             viewport={{ once: true }}
             className="lg:col-span-3 space-y-5 sm:space-y-6 lg:space-y-0 xl:space-y-0 flex flex-col"
           >
-            {/* Step tabs */}
-            <div className="flex justify-center">
-              <div className="flex bg-gray-900/70 backdrop-blur-sm rounded-4xl p-1.5 sm:p-2">
+            {/* Step tabs — scrollable on very small screens without resizing page */}
+            <div
+              className="flex justify-center w-full max-w-full overflow-x-auto"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
+              <div className="inline-flex bg-gray-900/70 backdrop-blur-sm rounded-4xl p-1.5 sm:p-2 whitespace-nowrap">
                 {STEPS.map((id) => (
                   <button
                     key={id}
                     onClick={() => setActiveStep(id)}
-                    className={`px-5 sm:px-7 lg:px-8 py-2 hover:cursor-pointer rounded-4xl font-semibold transition-all duration-300 relative overflow-hidden ${
+                    className={`shrink-0 px-4 sm:px-6 lg:px-8 py-2 hover:cursor-pointer rounded-4xl font-semibold transition-all duration-300 relative overflow-hidden ${
                       activeStep === id
                         ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-600/25"
                         : "text-gray-300 hover:text-white hover:bg-gray-800/50"
@@ -444,7 +414,7 @@ export default function MethodSection() {
             {/* Mobile-only (equal bars) */}
             <MobileFunnel activeStep={activeStep} bands={t.bands} />
 
-            {/* Desktop/Tablet triangle (aligned edges, bottom as triangle) */}
+            {/* Desktop/Tablet triangle (right-aligned) */}
             <DesktopTriangle
               activeStep={activeStep}
               bands={t.bands}
