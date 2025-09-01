@@ -57,7 +57,7 @@ export default function Header() {
                 alt="Aqua Ware Logo"
                 width={0}
                 height={0}
-                className="h-8 lg:h-12 w-auto"
+                className="h-8 lg:h-9 w-auto"
                 priority
               />
             </Link>
