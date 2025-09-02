@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   title: "AquaWare",
   description: "AquaWare which works for the better water solutions",
   generator: "Developer",
-  icons: "/AquaWare Circle.png",
+  icons: "/Circle.png",
 };
 
 export default function RootLayout({
