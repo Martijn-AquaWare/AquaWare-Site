@@ -306,7 +306,7 @@ export default function PartnerSection() {
         >
           <div className="flex-shrink-0">
             <Image
-              src="/AquaWare Circle.png"
+              src="/Circle.png"
               alt="AquaWare logo"
               width={120}
               height={120}
