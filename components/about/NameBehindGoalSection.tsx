@@ -144,7 +144,7 @@ export default function NameBehindGoalSection() {
                 variants={cardVariants}
                 className="bg-blue-50 dark:bg-blue-950/50 p-4 rounded-xl"
               >
-                <h3 className="text-xl font-bold text-blue-600">{card.term}</h3>
+                <h3 className="text-xl font-bold text-foreground">{card.term}</h3>
                 <p className="text-muted-foreground">{card.description}</p>
               </motion.div>
             ))}

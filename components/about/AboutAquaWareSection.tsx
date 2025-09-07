@@ -116,7 +116,7 @@ export default function AboutAquaWareSection() {
               variants={cardVariants}
               className="bg-muted p-6 rounded-2xl space-y-4"
             >
-              <h3 className="text-xl font-bold text-primary">
+              <h3 className="text-xl font-bold text-foreground">
                 ✿ {currentContent.whatWeDo.title}
               </h3>
               <p className="text-muted-foreground">
@@ -128,7 +128,7 @@ export default function AboutAquaWareSection() {
               variants={cardVariants}
               className="bg-muted p-6 rounded-2xl space-y-4"
             >
-              <h3 className="text-xl font-bold text-primary">
+              <h3 className="text-xl font-bold text-foreground">
                 ✿ {currentContent.ourGoal.title}
               </h3>
               <p className="text-muted-foreground">

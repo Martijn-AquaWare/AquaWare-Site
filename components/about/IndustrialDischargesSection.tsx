@@ -74,7 +74,7 @@ export default function IndustrialDischargesSection() {
               {currentContent.subtitle}
             </p>
             <Link href="/contact">
-              <Button className="bg-muted-foreground hover:cursor-pointer text-white hover:bg-foreground">
+              <Button className="bg-white text-blue-900 hover:bg-white font-semibold hover:cursor-pointer ">
                 {currentContent.button}
               </Button>
             </Link>

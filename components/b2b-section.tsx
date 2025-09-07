@@ -165,7 +165,7 @@ export default function B2BSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mx-auto mt-8 max-w-2xl"
           >
-            <div className="relative rounded-2xl border border-white/10 bg-white/10 backdrop-blur-lg p-5 sm:p-6 shadow-[0_8px_40px_-10px_rgba(0,0,0,0.5)]">
+            <div className="relative rounded-2xl ">
               <div className="pointer-events-none absolute inset-0 rounded-2xl [mask-image:radial-gradient(60%_60%_at_50%_50%,#000_45%,transparent)]">
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 via-white/0 to-white/10" />
               </div>
@@ -173,9 +173,9 @@ export default function B2BSection() {
                 <h3 className="text-white font-semibold text-lg sm:text-xl">
                   {t.newsletter.title}
                 </h3>
-                <p className="text-white/70 text-sm mt-1">
+                {/* <p className="text-white/70 text-sm mt-1">
                   {t.newsletter.subtitle}
-                </p>
+                </p> */}
                 <NewsletterForm
                   placeholder={t.newsletter.placeholder}
                   cta={t.newsletter.cta}
@@ -330,7 +330,7 @@ function NewsletterForm({
           whileHover={{ y: -1 }}
           disabled={loading}
           type="submit"
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-white text-blue-900 font-semibold px-5 py-3 disabled:opacity-70 disabled:cursor-not-allowed shadow hover:shadow-lg transition"
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-xl bg-white text-blue-900 font-semibold px-5 py-3 disabled:opacity-70 hover:cursor-pointer shadow hover:shadow-lg transition"
         >
           {loading ? (
             <span className="inline-flex items-center gap-2">
